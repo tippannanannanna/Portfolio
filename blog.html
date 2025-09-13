@@ -259,11 +259,8 @@
         // Load blog posts
         async function loadBlogPosts() {
             try {
-                // Try serverless API (fresh from Git), fall back to static file
-                let response = await fetch('/api/get-posts');
-                if (!response.ok) {
-                    response = await fetch('blog-posts.json');
-                }
+                // Load posts from static JSON file (GitHub Pages compatible)
+                let response = await fetch('blog-posts.json');
                 if (!response.ok) {
                     throw new Error('Failed to load blog posts');
                 }

@@ -489,25 +489,17 @@
             reader.readAsDataURL(file);
         });
 
-        // Save post to GitHub via Vercel Serverless Function; fall back to localStorage
+        // Save post to localStorage (GitHub Pages compatible)
         async function savePost(postData) {
             try {
-                const resp = await fetch('/api/save-post', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(postData)
-                });
-                if (!resp.ok) {
-                    const t = await resp.text();
-                    throw new Error(t || 'Failed to save to GitHub');
-                }
-                const result = await resp.json();
-                // Keep local copy for instant UX before redeploy
-                upsertLocalPost(result.post || postData);
+                // For GitHub Pages, we'll use localStorage only
+                // In a production setup, you would manually update blog-posts.json
+                upsertLocalPost(postData);
+                showMessage('Blog post saved locally! For GitHub Pages, manually update blog-posts.json file.', 'success');
                 return true;
             } catch (err) {
-                console.warn('Falling back to localStorage. Error:', err);
-                upsertLocalPost(postData);
+                console.error('Error saving post:', err);
+                showMessage('Error saving post. Please try again.', 'error');
                 return false;
             }
         }

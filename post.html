@@ -274,8 +274,8 @@
             }
 
             try {
-                // Try to load from API first, then fallback to localStorage
-                let response = await fetch('/api/get-posts');
+                // Load posts from static JSON file (GitHub Pages compatible)
+                let response = await fetch('blog-posts.json');
                 let posts = [];
                 
                 if (response.ok) {
