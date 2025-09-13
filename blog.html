@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - Tippanna Bangi | Creative Portfolio | Ramdurg | Deshpande Skilling</title>
+    <meta name="description" content="Read the latest blog posts by Tippanna Bangi, a tech-savvy graduate from Ramdurg with experience at Deshpande Skilling. Insights on technology, automation, and career development.">
+    <meta name="keywords" content="Tippanna Bangi, blog, technology, automation, Deshpande Skilling, Ramdurg, career, learning">
+    <meta name="author" content="Tippanna Bangi">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/favicon.png">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Inter Font from Google Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap">
+    
+    <!-- Three.js CDN for 3D background -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZQ0T3HE23B"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ZQ0T3HE23B');
+    </script>
+
+    <style>
+        /* General styling for the body and fonts */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0F172A; /* Slate-900 dark background */
+        }
+        
+        /* Custom scrollbar for a cleaner look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1E293B; /* Slate-800 */
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #475569; /* Slate-600 */
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #0D9488; /* Teal-600 */
+        }
+        
+        /* A custom class for the animated underline on section titles */
+        .section-title {
+            position: relative;
+            display: inline-block;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -8px;
+            width: 75%;
+            height: 4px;
+            background: #0D9488; /* Teal-600 accent */
+            border-radius: 9999px;
+            transition: all 0.3s ease-in-out;
+        }
+        
+        /* Fade-in effect for sections */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Style for the 3D background canvas */
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Place it behind the content */
+            pointer-events: none; /* Allows clicks to pass through to the content */
+        }
+        
+        /* Ensure the main content is on top of the canvas */
+        main, header, footer {
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Blog post card styling */
+        .blog-card {
+            transition: all 0.3s ease;
+        }
+        .blog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-100 antialiased">
+    <!-- 3D Background Canvas -->
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- Header & Navigation -->
+    <header id="main-header" class="fixed top-0 left-0 right-0 z-50 bg-slate-900/80 backdrop-blur-md shadow-lg transition-all duration-300 ease-in-out">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <!-- Logo and Name -->
+            <a href="index.html" class="flex items-center space-x-2">
+                <img src="https://i.ibb.co/pvwhFQcK/IMG-20250808-012023.png" alt="Tippanna Bangi Logo" class="w-10 h-10 rounded-full border-2 border-teal-400 object-cover">
+                <span class="text-3xl font-black text-teal-400">Tippanna Bangi</span>
+            </a>
+            <div class="hidden md:flex space-x-8 font-medium">
+                <a href="index.html#about" class="text-slate-300 hover:text-teal-400 transition-colors">About</a>
+                <a href="index.html#skills" class="text-slate-300 hover:text-teal-400 transition-colors">Skills</a>
+                <a href="index.html#projects" class="text-slate-300 hover:text-teal-400 transition-colors">Projects</a>
+                <a href="index.html#experience" class="text-slate-300 hover:text-teal-400 transition-colors">Experience</a>
+                <a href="index.html#certifications" class="text-slate-300 hover:text-teal-400 transition-colors">Certifications</a>
+                <a href="index.html#short-films" class="text-slate-300 hover:text-teal-400 transition-colors">Short Films</a>
+                <a href="blog.html" class="text-teal-400 font-semibold">Blog</a>
+                <a href="index.html#contact" class="text-slate-300 hover:text-teal-400 transition-colors">Contact</a>
+            </div>
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-button" class="md:hidden text-slate-300 hover:text-teal-400 focus:outline-none">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </nav>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-slate-800/90 shadow-sm">
+            <a href="index.html#about" class="block px-6 py-3 text-slate-300 hover:bg-slate-700">About</a>
+            <a href="index.html#skills" class="block px-6 py-3 text-slate-300 hover:bg-slate-700">Skills</a>
+            <a href="index.html#projects" class="block px-6 py-3 text-slate-300 hover:bg-slate-700">Projects</a>
+            <a href="index.html#experience" class="block px-6 py-3 text-slate-300 hover:bg-slate-700">Experience</a>
+            <a href="index.html#certifications" class="block px-6 py-3 text-slate-300 hover:bg-slate-700">Certifications</a>
+            <a href="index.html#short-films" class="block px-6 py-3 text-slate-300 hover:bg-slate-700">Short Films</a>
+            <a href="blog.html" class="block px-6 py-3 text-teal-400 font-semibold bg-slate-700">Blog</a>
+            <a href="index.html#contact" class="block px-6 py-3 text-slate-300 hover:bg-slate-700">Contact</a>
+        </div>
+    </header>
+
+    <main class="space-y-28 py-16">
+        <!-- Blog Header Section -->
+        <section id="blog-header" class="container mx-auto px-6 md:px-12 mt-20 fade-in-section">
+            <div class="text-center">
+                <h1 class="text-4xl md:text-6xl font-extrabold text-white leading-tight">
+                    My <span class="text-teal-400">Blog</span>
+                </h1>
+                <p class="mt-6 text-lg md:text-xl text-slate-300 leading-relaxed max-w-3xl mx-auto">
+                    Thoughts, experiences, and insights on technology, career development, and life in Ramdurg. 
+                    Sharing my journey as a tech-savvy graduate from Deshpande Skilling.
+                </p>
+            </div>
+        </section>
+
+        <!-- Blog Posts Section -->
+        <section id="blog-posts" class="container mx-auto px-6 md:px-12 fade-in-section">
+            <div id="blog-posts-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Blog posts will be dynamically loaded here -->
+            </div>
+            
+            <!-- Loading message -->
+            <div id="loading-message" class="text-center py-12">
+                <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-teal-400"></div>
+                <p class="mt-4 text-slate-300">Loading blog posts...</p>
+            </div>
+            
+            <!-- No posts message -->
+            <div id="no-posts-message" class="hidden text-center py-12">
+                <div class="bg-slate-800 rounded-2xl p-8 max-w-md mx-auto">
+                    <svg class="w-16 h-16 text-slate-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    </svg>
+                    <h3 class="text-xl font-semibold text-white mb-2">No blog posts yet</h3>
+                    <p class="text-slate-300">Check back soon for new content!</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 p-8 text-center border-t border-slate-800">
+        <p>© 2025 Tippanna Bangi. All rights reserved.</p>
+        <p class="mt-2">Developed with ❤️ & Tippanna</p>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href.length > 1) {
+                    e.preventDefault();
+                    const targetElement = document.querySelector(href);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            });
+        });
+
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu when a link is clicked
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Add a class to the header on scroll
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('main-header');
+            if (window.scrollY > 50) {
+                header.classList.add('bg-opacity-100');
+                header.classList.remove('bg-opacity-80');
+            } else {
+                header.classList.add('bg-opacity-80');
+                header.classList.remove('bg-opacity-100');
+            }
+        });
+
+        // Fade-in sections on scroll using Intersection Observer
+        const fadeInSections = document.querySelectorAll('.fade-in-section');
+        const options = {
+            threshold: 0.2
+        };
+
+        const observer = new IntersectionObserver(function(entries, observer) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, options);
+
+        fadeInSections.forEach(section => {
+            observer.observe(section);
+        });
+
+        // Load blog posts
+        async function loadBlogPosts() {
+            try {
+                // Try serverless API (fresh from Git), fall back to static file
+                let response = await fetch('/api/get-posts');
+                if (!response.ok) {
+                    response = await fetch('blog-posts.json');
+                }
+                if (!response.ok) {
+                    throw new Error('Failed to load blog posts');
+                }
+                const filePosts = await response.json();
+                // Also load posts from localStorage (created from admin.html)
+                const localPosts = JSON.parse(localStorage.getItem('blog_posts') || '[]');
+                // Merge by id, prefer localPosts over filePosts if duplicates
+                const map = new Map();
+                filePosts.forEach(p => map.set(p.id, p));
+                localPosts.forEach(p => map.set(p.id, p));
+                const posts = Array.from(map.values());
+                
+                const container = document.getElementById('blog-posts-container');
+                const loadingMessage = document.getElementById('loading-message');
+                const noPostsMessage = document.getElementById('no-posts-message');
+                
+                loadingMessage.style.display = 'none';
+                
+                if (posts.length === 0) {
+                    noPostsMessage.classList.remove('hidden');
+                    return;
+                }
+                
+                // Sort posts by date (newest first)
+                posts.sort((a, b) => new Date(b.date) - new Date(a.date));
+                
+                posts.forEach(post => {
+                    const postElement = createBlogPostCard(post);
+                    container.appendChild(postElement);
+                });
+                
+            } catch (error) {
+                console.error('Error loading blog posts:', error);
+                document.getElementById('loading-message').innerHTML = 
+                    '<p class="text-red-400">Error loading blog posts. Please try again later.</p>';
+            }
+        }
+
+        function createBlogPostCard(post) {
+            const card = document.createElement('div');
+            card.className = 'blog-card bg-slate-800 rounded-2xl shadow-lg overflow-hidden';
+            
+            const date = new Date(post.date).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            
+            const coverHtml = post.coverImage && post.coverImage.src ? `
+                <img src="${post.coverImage.src}" alt="${(post.coverImage.alt || post.title || 'Blog cover').replace(/"/g, '&quot;')}" class="w-full h-40 object-cover">
+            ` : '';
+
+            card.innerHTML = `
+                ${coverHtml}
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-sm text-teal-400 font-medium">${date}</span>
+                        <span class="text-xs text-slate-400 bg-slate-700 px-2 py-1 rounded-full">${post.category || 'General'}</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white mb-3 line-clamp-2">${post.title}</h3>
+                    <p class="text-slate-300 mb-4 line-clamp-3">${post.description}</p>
+                    <a href="post.html?id=${post.id}" class="inline-flex items-center text-teal-400 font-medium hover:text-teal-300 transition-colors">
+                        Read More 
+                        <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </a>
+                </div>
+            `;
+            
+            return card;
+        }
+
+        // Load blog posts when page loads
+        document.addEventListener('DOMContentLoaded', loadBlogPosts);
+
+        // Three.js 3D Background Animation
+        let scene, camera, renderer, particles;
+        let mouseX = 0, mouseY = 0;
+        let windowHalfX = window.innerWidth / 2;
+        let windowHalfY = window.innerHeight / 2;
+
+        function init() {
+            const canvas = document.getElementById('bg-canvas');
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+
+            // Create a field of particles
+            const geometry = new THREE.BufferGeometry();
+            const vertices = [];
+            const particleCount = 2500;
+            const starColor = new THREE.Color(0x0D9488); // Teal color
+
+            for (let i = 0; i < particleCount; i++) {
+                const x = (Math.random() - 0.5) * 2000;
+                const y = (Math.random() - 0.5) * 2000;
+                const z = (Math.random() - 0.5) * 2000;
+                vertices.push(x, y, z);
+            }
+            geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+
+            const material = new THREE.PointsMaterial({
+                color: starColor,
+                size: 2.5,
+                transparent: true,
+                opacity: 0.7
+            });
+
+            particles = new THREE.Points(geometry, material);
+            scene.add(particles);
+
+            camera.position.z = 5;
+
+            document.addEventListener('mousemove', onDocumentMouseMove, false);
+            window.addEventListener('resize', onWindowResize, false);
+        }
+
+        function onWindowResize() {
+            windowHalfX = window.innerWidth / 2;
+            windowHalfY = window.innerHeight / 2;
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        function onDocumentMouseMove(event) {
+            mouseX = (event.clientX - windowHalfX);
+            mouseY = (event.clientY - windowHalfY);
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+
+            // Animate particles
+            const positions = particles.geometry.attributes.position.array;
+            for (let i = 0; i < positions.length; i += 3) {
+                positions[i + 2] += 1; // Move particles towards the camera
+                if (positions[i + 2] > camera.position.z) {
+                    // Reset particle to far away when it passes the camera
+                    positions[i] = (Math.random() - 0.5) * 2000;
+                    positions[i + 1] = (Math.random() - 0.5) * 2000;
+                    positions[i + 2] = -2000;
+                }
+            }
+            particles.geometry.attributes.position.needsUpdate = true;
+
+            // Subtle camera movement based on mouse position
+            camera.position.x += (mouseX / 2000 - camera.position.x) * 0.05;
+            camera.position.y += (-mouseY / 2000 - camera.position.y) * 0.05;
+            camera.lookAt(scene.position);
+
+            renderer.render(scene, camera);
+        }
+
+        window.onload = function() {
+            init();
+            animate();
+        };
+    </script>
+</body>
+</html>

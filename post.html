@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Post - Tippanna Bangi | Creative Portfolio</title>
+    <meta name="description" content="Read the latest blog posts by Tippanna Bangi, a tech-savvy graduate from Ramdurg with experience at Deshpande Skilling.">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/favicon.png">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Inter Font from Google Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap">
+    
+    <!-- Three.js CDN for 3D background -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZQ0T3HE23B"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ZQ0T3HE23B');
+    </script>
+
+    <style>
+        /* General styling for the body and fonts */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0F172A; /* Slate-900 dark background */
+        }
+        
+        /* Custom scrollbar for a cleaner look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1E293B; /* Slate-800 */
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #475569; /* Slate-600 */
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #0D9488; /* Teal-600 */
+        }
+        
+        /* Style for the 3D background canvas */
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Place it behind the content */
+            pointer-events: none; /* Allows clicks to pass through to the content */
+        }
+        
+        /* Ensure the main content is on top of the canvas */
+        main, header, footer {
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Blog content styling */
+        .blog-content {
+            line-height: 1.7;
+        }
+        .blog-content h1, .blog-content h2, .blog-content h3, .blog-content h4, .blog-content h5, .blog-content h6 {
+            color: #f1f5f9;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        .blog-content h1 { font-size: 2.25rem; }
+        .blog-content h2 { font-size: 1.875rem; }
+        .blog-content h3 { font-size: 1.5rem; }
+        .blog-content h4 { font-size: 1.25rem; }
+        .blog-content h5 { font-size: 1.125rem; }
+        .blog-content h6 { font-size: 1rem; }
+        
+        .blog-content p {
+            margin-bottom: 1.5rem;
+            color: #cbd5e1;
+        }
+        
+        .blog-content ul, .blog-content ol {
+            margin-bottom: 1.5rem;
+            padding-left: 2rem;
+        }
+        
+        .blog-content li {
+            margin-bottom: 0.5rem;
+            color: #cbd5e1;
+        }
+        
+        .blog-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 0.5rem;
+            margin: 1.5rem 0;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .blog-content blockquote {
+            border-left: 4px solid #0D9488;
+            padding-left: 1.5rem;
+            margin: 1.5rem 0;
+            font-style: italic;
+            color: #94a3b8;
+        }
+        
+        .blog-content code {
+            background-color: #1e293b;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-family: 'Courier New', monospace;
+            color: #f1f5f9;
+        }
+        
+        .blog-content pre {
+            background-color: #1e293b;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+        }
+        
+        .blog-content pre code {
+            background: none;
+            padding: 0;
+        }
+        
+        .blog-content a {
+            color: #0D9488;
+            text-decoration: underline;
+        }
+        
+        .blog-content a:hover {
+            color: #14b8a6;
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-100 antialiased">
+    <!-- 3D Background Canvas -->
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- Header & Navigation -->
+    <header id="main-header" class="fixed top-0 left-0 right-0 z-50 bg-slate-900/80 backdrop-blur-md shadow-lg transition-all duration-300 ease-in-out">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <!-- Logo and Name -->
+            <a href="index.html" class="flex items-center space-x-2">
+                <img src="https://i.ibb.co/pvwhFQcK/IMG-20250808-012023.png" alt="Tippanna Bangi Logo" class="w-10 h-10 rounded-full border-2 border-teal-400 object-cover">
+                <span class="text-3xl font-black text-teal-400">Tippanna Bangi</span>
+            </a>
+            <div class="hidden md:flex space-x-8 font-medium">
+                <a href="index.html#about" class="text-slate-300 hover:text-teal-400 transition-colors">About</a>
+                <a href="index.html#skills" class="text-slate-300 hover:text-teal-400 transition-colors">Skills</a>
+                <a href="index.html#projects" class="text-slate-300 hover:text-teal-400 transition-colors">Projects</a>
+                <a href="index.html#experience" class="text-slate-300 hover:text-teal-400 transition-colors">Experience</a>
+                <a href="index.html#certifications" class="text-slate-300 hover:text-teal-400 transition-colors">Certifications</a>
+                <a href="index.html#short-films" class="text-slate-300 hover:text-teal-400 transition-colors">Short Films</a>
+                <a href="blog.html" class="text-teal-400 font-semibold">Blog</a>
+                <a href="index.html#contact" class="text-slate-300 hover:text-teal-400 transition-colors">Contact</a>
+            </div>
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-button" class="md:hidden text-slate-300 hover:text-teal-400 focus:outline-none">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </nav>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-slate-800/90 shadow-sm">
+            <a href="index.html#about" class="block px-6 py-3 text-slate-300 hover:bg-slate-700">About</a>
+            <a href="index.html#skills" class="block px-6 py-3 text-slate-300 hover:bg-slate-700">Skills</a>
+            <a href="index.html#projects" class="block px-6 py-3 text-slate-300 hover:bg-slate-700">Projects</a>
+            <a href="index.html#experience" class="block px-6 py-3 text-slate-300 hover:bg-slate-700">Experience</a>
+            <a href="index.html#certifications" class="block px-6 py-3 text-slate-300 hover:bg-slate-700">Certifications</a>
+            <a href="index.html#short-films" class="block px-6 py-3 text-slate-300 hover:bg-slate-700">Short Films</a>
+            <a href="blog.html" class="block px-6 py-3 text-teal-400 font-semibold bg-slate-700">Blog</a>
+            <a href="index.html#contact" class="block px-6 py-3 text-slate-300 hover:bg-slate-700">Contact</a>
+        </div>
+    </header>
+
+    <main class="py-16">
+        <!-- Loading State -->
+        <div id="loading" class="container mx-auto px-6 mt-20 text-center py-12">
+            <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-teal-400"></div>
+            <p class="mt-4 text-slate-300">Loading blog post...</p>
+        </div>
+
+        <!-- Error State -->
+        <div id="error" class="hidden container mx-auto px-6 mt-20 text-center py-12">
+            <div class="bg-slate-800 rounded-2xl p-8 max-w-md mx-auto">
+                <svg class="w-16 h-16 text-red-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+                </svg>
+                <h3 class="text-xl font-semibold text-white mb-2">Post Not Found</h3>
+                <p class="text-slate-300 mb-4">The blog post you're looking for doesn't exist or has been removed.</p>
+                <a href="blog.html" class="inline-block bg-teal-500 text-slate-900 font-bold py-2 px-6 rounded-lg hover:bg-teal-400 transition-colors">
+                    Back to Blog
+                </a>
+            </div>
+        </div>
+
+        <!-- Blog Post Content -->
+        <article id="blog-post" class="hidden container mx-auto px-6 mt-20 max-w-4xl">
+            <!-- Post Header -->
+            <header class="mb-8">
+                <div class="flex items-center justify-between mb-4">
+                    <span id="post-category" class="text-sm text-teal-400 font-medium bg-slate-700 px-3 py-1 rounded-full"></span>
+                    <time id="post-date" class="text-sm text-slate-400"></time>
+                </div>
+                <h1 id="post-title" class="text-3xl md:text-4xl font-bold text-white mb-4"></h1>
+                <p id="post-description" class="text-lg text-slate-300 mb-6"></p>
+            </header>
+
+            <!-- Cover Image -->
+            <div id="cover-image-container" class="mb-8 hidden">
+                <img id="cover-image" src="" alt="" class="w-full max-h-96 object-cover rounded-xl border border-slate-700">
+            </div>
+
+            <!-- Post Content -->
+            <div id="post-content" class="blog-content prose prose-invert max-w-none">
+                <!-- Content will be loaded here -->
+            </div>
+
+            <!-- Post Footer -->
+            <footer class="mt-12 pt-8 border-t border-slate-700">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-4">
+                        <img src="https://i.ibb.co/pvwhFQcK/IMG-20250808-012023.png" alt="Tippanna Bangi" class="w-12 h-12 rounded-full border-2 border-teal-400 object-cover">
+                        <div>
+                            <h3 class="text-lg font-semibold text-white">Tippanna Bangi</h3>
+                            <p class="text-sm text-slate-400">Tech-savvy graduate from Deshpande Skilling</p>
+                        </div>
+                    </div>
+                    <a href="blog.html" class="inline-flex items-center text-teal-400 font-medium hover:text-teal-300 transition-colors">
+                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                        </svg>
+                        Back to Blog
+                    </a>
+                </div>
+            </footer>
+        </article>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 p-8 text-center border-t border-slate-800">
+        <p>© 2025 Tippanna Bangi. All rights reserved.</p>
+        <p class="mt-2">Developed with ❤️ & Tippanna</p>
+    </footer>
+
+    <script>
+        // Get post ID from URL parameters
+        function getPostId() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('id');
+        }
+
+        // Load blog post
+        async function loadBlogPost() {
+            const postId = getPostId();
+            if (!postId) {
+                showError();
+                return;
+            }
+
+            try {
+                // Try to load from API first, then fallback to localStorage
+                let response = await fetch('/api/get-posts');
+                let posts = [];
+                
+                if (response.ok) {
+                    posts = await response.json();
+                } else {
+                    // Fallback to localStorage
+                    posts = JSON.parse(localStorage.getItem('blog_posts') || '[]');
+                }
+
+                const post = posts.find(p => p.id === postId);
+                
+                if (!post) {
+                    showError();
+                    return;
+                }
+
+                displayPost(post);
+            } catch (error) {
+                console.error('Error loading blog post:', error);
+                showError();
+            }
+        }
+
+        // Display the blog post
+        function displayPost(post) {
+            document.getElementById('loading').classList.add('hidden');
+            document.getElementById('blog-post').classList.remove('hidden');
+
+            // Update page title and meta description
+            document.title = `${post.title} - Tippanna Bangi | Creative Portfolio`;
+            document.querySelector('meta[name="description"]').setAttribute('content', post.description);
+
+            // Update post content
+            document.getElementById('post-title').textContent = post.title;
+            document.getElementById('post-description').textContent = post.description;
+            document.getElementById('post-content').innerHTML = post.content;
+            document.getElementById('post-category').textContent = post.category || 'General';
+            
+            // Format and display date
+            const date = new Date(post.date);
+            document.getElementById('post-date').textContent = date.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+
+            // Display cover image if available
+            if (post.coverImage && post.coverImage.src) {
+                const coverContainer = document.getElementById('cover-image-container');
+                const coverImg = document.getElementById('cover-image');
+                coverImg.src = post.coverImage.src;
+                coverImg.alt = post.coverImage.alt || post.title;
+                coverContainer.classList.remove('hidden');
+            }
+        }
+
+        // Show error state
+        function showError() {
+            document.getElementById('loading').classList.add('hidden');
+            document.getElementById('error').classList.remove('hidden');
+        }
+
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu when a link is clicked
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Add a class to the header on scroll
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('main-header');
+            if (window.scrollY > 50) {
+                header.classList.add('bg-opacity-100');
+                header.classList.remove('bg-opacity-80');
+            } else {
+                header.classList.add('bg-opacity-80');
+                header.classList.remove('bg-opacity-100');
+            }
+        });
+
+        // Load blog post when page loads
+        document.addEventListener('DOMContentLoaded', loadBlogPost);
+
+        // Three.js 3D Background Animation
+        let scene, camera, renderer, particles;
+        let mouseX = 0, mouseY = 0;
+        let windowHalfX = window.innerWidth / 2;
+        let windowHalfY = window.innerHeight / 2;
+
+        function init() {
+            const canvas = document.getElementById('bg-canvas');
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+
+            // Create a field of particles
+            const geometry = new THREE.BufferGeometry();
+            const vertices = [];
+            const particleCount = 2500;
+            const starColor = new THREE.Color(0x0D9488); // Teal color
+
+            for (let i = 0; i < particleCount; i++) {
+                const x = (Math.random() - 0.5) * 2000;
+                const y = (Math.random() - 0.5) * 2000;
+                const z = (Math.random() - 0.5) * 2000;
+                vertices.push(x, y, z);
+            }
+            geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+
+            const material = new THREE.PointsMaterial({
+                color: starColor,
+                size: 2.5,
+                transparent: true,
+                opacity: 0.7
+            });
+
+            particles = new THREE.Points(geometry, material);
+            scene.add(particles);
+
+            camera.position.z = 5;
+
+            document.addEventListener('mousemove', onDocumentMouseMove, false);
+            window.addEventListener('resize', onWindowResize, false);
+        }
+
+        function onWindowResize() {
+            windowHalfX = window.innerWidth / 2;
+            windowHalfY = window.innerHeight / 2;
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        function onDocumentMouseMove(event) {
+            mouseX = (event.clientX - windowHalfX);
+            mouseY = (event.clientY - windowHalfY);
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+
+            // Animate particles
+            const positions = particles.geometry.attributes.position.array;
+            for (let i = 0; i < positions.length; i += 3) {
+                positions[i + 2] += 1; // Move particles towards the camera
+                if (positions[i + 2] > camera.position.z) {
+                    // Reset particle to far away when it passes the camera
+                    positions[i] = (Math.random() - 0.5) * 2000;
+                    positions[i + 1] = (Math.random() - 0.5) * 2000;
+                    positions[i + 2] = -2000;
+                }
+            }
+            particles.geometry.attributes.position.needsUpdate = true;
+
+            // Subtle camera movement based on mouse position
+            camera.position.x += (mouseX / 2000 - camera.position.x) * 0.05;
+            camera.position.y += (-mouseY / 2000 - camera.position.y) * 0.05;
+            camera.lookAt(scene.position);
+
+            renderer.render(scene, camera);
+        }
+
+        window.onload = function() {
+            init();
+            animate();
+        };
+    </script>
+</body>
+</html>

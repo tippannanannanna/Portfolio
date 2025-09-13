@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tippanna Bangi | Creative Portfolio</title>
+    <!-- Favicon link updated to point to a local file path -->
+    <!-- Google requires the favicon to be on the same domain to be displayed in search results. -->
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Inter Font from Google Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap">
+    <!-- Three.js CDN for 3D background -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <!-- Google tag (gtag.js) - ADDED HERE -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZQ0T3HE23B"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-ZQ0T3HE23B');
+    </script>
+
+    <style>
+        /* General styling for the body and fonts */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0F172A; /* Slate-900 dark background */
+        }
+        /* Custom scrollbar for a cleaner look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1E293B; /* Slate-800 */
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #475569; /* Slate-600 */
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #0D9488; /* Teal-600 */
+        }
+        /* A custom class for the animated underline on section titles */
+        .section-title {
+            position: relative;
+            display: inline-block;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -8px;
+            width: 75%;
+            height: 4px;
+            background: #0D9488; /* Teal-600 accent */
+            border-radius: 9999px;
+            transition: all 0.3s ease-in-out;
+        }
+        /* Fade-in effect for sections */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* Style for the 3D background canvas */
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Place it behind the content */
+            pointer-events: none; /* Allows clicks to pass through to the content */
+        }
+        /* Ensure the main content is on top of the canvas */
+        main, header, footer {
+            position: relative;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-100 antialiased">
+
+    <!-- 3D Background Canvas -->
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- Header & Navigation -->
+    <header id="main-header" class="fixed top-0 left-0 right-0 z-50 bg-slate-900/80 backdrop-blur-md shadow-lg transition-all duration-300 ease-in-out">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <!-- Logo and Name -->
+            <a href="#" class="flex items-center space-x-2">
+                <img src="https://i.ibb.co/pvwhFQcK/IMG-20250808-012023.png" alt="Tippanna Bangi Logo" class="w-10 h-10 rounded-full border-2 border-teal-400 object-cover">
+                <span class="text-3xl font-black text-teal-400">Tippanna Bangi</span>
+            </a>
+            <div class="hidden md:flex space-x-8 font-medium">
+                <a href="#about" class="text-slate-300 hover:text-teal-400 transition-colors">About</a>
+                <a href="#skills" class="text-slate-300 hover:text-teal-400 transition-colors">Skills</a>
+                <a href="#projects" class="text-slate-300 hover:text-teal-400 transition-colors">Projects</a>
+                <a href="#experience" class="text-slate-300 hover:text-teal-400 transition-colors">Experience</a>
+                <a href="#certifications" class="text-slate-300 hover:text-teal-400 transition-colors">Certifications</a>
+                <a href="#short-films" class="text-slate-300 hover:text-teal-400 transition-colors">Short Films</a>
+                <a href="blog.html" class="text-slate-300 hover:text-teal-400 transition-colors">Blog</a>
+                <a href="#contact" class="text-slate-300 hover:text-teal-400 transition-colors">Contact</a>
+            </div>
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-button" class="md:hidden text-slate-300 hover:text-teal-400 focus:outline-none">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </nav>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-slate-800/90 shadow-sm">
+            <a href="#about" class="block px-6 py-3 text-slate-300 hover:bg-slate-700">About</a>
+            <a href="#skills" class="block px-6 py-3 text-slate-300 hover:bg-slate-700">Skills</a>
+            <a href="#projects" class="block px-6 py-3 text-slate-300 hover:bg-slate-700">Projects</a>
+            <a href="#experience" class="block px-6 py-3 text-slate-300 hover:bg-slate-700">Experience</a>
+            <a href="#certifications" class="block px-6 py-3 text-slate-300 hover:bg-slate-700">Certifications</a>
+            <a href="#short-films" class="block px-6 py-3 text-slate-300 hover:bg-slate-700">Short Films</a>
+            <a href="blog.html" class="block px-6 py-3 text-slate-300 hover:bg-slate-700">Blog</a>
+            <a href="#contact" class="block px-6 py-3 text-slate-300 hover:bg-slate-700">Contact</a>
+        </div>
+    </header>
+
+    <main class="space-y-28 py-16">
+
+        <!-- Hero Section -->
+        <section id="hero" class="container mx-auto px-6 md:px-12 mt-20 fade-in-section">
+            <div class="grid md:grid-cols-2 items-center gap-12 md:gap-24">
+                <div class="text-center md:text-left animate-fade-in-up">
+                    <h1 class="text-4xl md:text-6xl font-extrabold text-white leading-tight">
+                        <span class="text-teal-400">Hello,</span> I'm <br class="hidden md:inline"> Tippanna Bangi
+                    </h1>
+                    <p class="mt-6 text-lg md:text-xl text-slate-300 leading-relaxed max-w-xl">
+                        A motivated and tech-savvy graduate with a passion for technology and automation. I'm skilled in communication and proactive problem-solving.
+                    </p>
+                    <div class="mt-8 flex justify-center md:justify-start space-x-4">
+                        <a href="#contact" class="bg-teal-500 text-slate-900 font-bold py-3 px-8 rounded-full shadow-lg hover:bg-teal-400 transition-colors duration-300 transform hover:scale-105">
+                            Get In Touch
+                        </a>
+                        <a href="#projects" class="bg-slate-700 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:bg-slate-600 transition-colors duration-300 transform hover:scale-105">
+                            View Work
+                        </a>
+                    </div>
+                </div>
+                <div class="flex justify-center md:justify-end">
+                    <!-- Updated photo with new image and class styling -->
+                    <div class="relative w-64 h-64 md:w-80 md:h-80 group">
+                        <div class="absolute inset-0 bg-gradient-to-br from-teal-500 to-cyan-500 rounded-full blur-xl opacity-75 group-hover:opacity-100 transition-opacity duration-500 animate-pulse"></div>
+                        <img src="https://i.ibb.co/DPmwzQRf/1755095563596.png"
+                             alt="Tippanna Bangi"
+                             class="relative rounded-full w-full h-full object-cover border-4 border-teal-500 shadow-2xl transition-transform duration-500 transform group-hover:scale-105"
+                             onerror="this.onerror=null;this.src='https://placehold.co/320x320/1e293b/d1d5db?text=Tippanna';">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Me Section -->
+        <section id="about" class="container mx-auto px-6 md:px-12 py-16 bg-slate-800 rounded-3xl shadow-xl fade-in-section">
+            <h2 class="text-4xl md:text-5xl font-bold text-center section-title mx-auto pb-4">About Me</h2>
+            <div class="mt-12 text-center text-lg max-w-4xl mx-auto text-slate-300">
+                <p>
+                    I am a tech-savvy graduate with a passion for technology, automation, and continuous learning. With nearly three years of experience as a Customer Associate at SquadStack, I have honed my skills in customer interaction, communication, and data handling.
+                </p>
+                <p class="mt-4">
+                    I am currently a trainee at Deshpande Skilling, where I'm further developing my technical and professional skills in areas like business communication, reasoning, aptitude, and technology. I am recognized for my adaptability, strong interpersonal skills, and a proactive approach to problem-solving.
+                </p>
+            </div>
+        </section>
+
+        <!-- Core Skills Section -->
+        <section id="skills" class="container mx-auto px-6 md:px-12 fade-in-section">
+            <h2 class="text-4xl md:text-5xl font-bold text-center section-title mx-auto pb-4">Core Skills</h2>
+            <div class="mt-12 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8">
+                <!-- Skill Card -->
+                <div class="bg-slate-800 p-6 rounded-2xl shadow-lg text-center flex flex-col items-center justify-center space-y-3 transform transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:bg-slate-700 group">
+                    <!-- SVG Icon for Customer Orientation -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users text-teal-400 transition-colors duration-300 group-hover:text-white"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    <h3 class="text-xl font-semibold text-white">Customer Orientation</h3>
+                </div>
+                <!-- Skill Card -->
+                <div class="bg-slate-800 p-6 rounded-2xl shadow-lg text-center flex flex-col items-center justify-center space-y-3 transform transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:bg-slate-700 group">
+                    <!-- SVG Icon for Communication -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-square text-teal-400 transition-colors duration-300 group-hover:text-white"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    <h3 class="text-xl font-semibold text-white">Communication Skills</h3>
+                </div>
+                <!-- Skill Card -->
+                <div class="bg-slate-800 p-6 rounded-2xl shadow-lg text-center flex flex-col items-center justify-center space-y-3 transform transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:bg-slate-700 group">
+                    <!-- SVG Icon for Problem Solving -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-lightbulb text-teal-400 transition-colors duration-300 group-hover:text-white"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1.3.5 2.5 1.5 3.5.8.8 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>
+                    <h3 class="text-xl font-semibold text-white">Problem Solving</h3>
+                </div>
+                <!-- Skill Card -->
+                <div class="bg-slate-800 p-6 rounded-2xl shadow-lg text-center flex flex-col items-center justify-center space-y-3 transform transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:bg-slate-700 group">
+                    <!-- SVG Icon for Result-Oriented -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-target text-teal-400 transition-colors duration-300 group-hover:text-white"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><path d="M12 12a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/></svg>
+                    <h3 class="text-xl font-semibold text-white">Result-Oriented</h3>
+                </div>
+                <!-- Skill Card -->
+                <div class="bg-slate-800 p-6 rounded-2xl shadow-lg text-center flex flex-col items-center justify-center space-y-3 transform transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:bg-slate-700 group">
+                    <!-- SVG Icon for Python & SQL -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-code text-teal-400 transition-colors duration-300 group-hover:text-white"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                    <h3 class="text-xl font-semibold text-white">Python Basic</h3>
+                </div>
+                <!-- Skill Card -->
+                <div class="bg-slate-800 p-6 rounded-2xl shadow-lg text-center flex flex-col items-center justify-center space-y-3 transform transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:bg-slate-700 group">
+                    <!-- SVG Icon for AI & Automation -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bot text-teal-400 transition-colors duration-300 group-hover:text-white"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 18h2"/><path d="M7 18h2"/></svg>
+                    <h3 class="text-xl font-semibold text-white">AI & Automation</h3>
+                </div>
+                <!-- Skill Card -->
+                <div class="bg-slate-800 p-6 rounded-2xl shadow-lg text-center flex flex-col items-center justify-center space-y-3 transform transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:bg-slate-700 group">
+                    <!-- Updated SVG Icon for MS Office & Google Workspace -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-stack text-teal-400 transition-colors duration-300 group-hover:text-white"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.414A2 2 0 0 0 15.414 2H14"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M9 16H8"/><path d="M15 16h-2"/><path d="M9 12H8"/><path d="M15 12h-2"/><path d="M9 8H8"/><path d="M15 8h-2"/></svg>
+                    <h3 class="text-xl font-semibold text-white">MS Office & Google Workspace</h3>
+                </div>
+                <!-- Skill Card -->
+                <div class="bg-slate-800 p-6 rounded-2xl shadow-lg text-center flex flex-col items-center justify-center space-y-3 transform transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:bg-slate-700 group">
+                    <!-- SVG Icon for Languages -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-globe text-teal-400 transition-colors duration-300 group-hover:text-white"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+                    <h3 class="text-xl font-semibold text-white">English & Kannada</h3>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="container mx-auto px-6 md:px-12 py-16 bg-slate-800 rounded-3xl shadow-xl fade-in-section">
+            <h2 class="text-4xl md:text-5xl font-bold text-center section-title mx-auto pb-4">My Projects</h2>
+            <div class="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Project Card 1: Notes Sharing Website -->
+                <div class="bg-slate-700 rounded-2xl shadow-lg overflow-hidden flex flex-col transform transition-all duration-300 hover:scale-105 hover:shadow-2xl">
+                    <img src="https://placehold.co/600x400/1e293b/d1d5db?text=Notes+Website" alt="Notes Sharing Website" class="w-full h-48 object-cover">
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h3 class="text-2xl font-semibold text-white mb-2">Notes Sharing Website</h3>
+                        <p class="text-slate-300 flex-grow">A platform for sharing and accessing academic resources and notes, built on WordPress.</p>
+                        <a href="https://gfgcrmd.wordpress.com/" target="_blank" class="mt-4 inline-block text-teal-400 font-medium hover:underline transition-colors">
+                            View Project →
+                        </a>
+                    </div>
+                </div>
+                <!-- Project Card 2: Hotel GMB Profile -->
+                <div class="bg-slate-700 rounded-2xl shadow-lg overflow-hidden flex flex-col transform transition-all duration-300 hover:scale-105 hover:shadow-2xl">
+                    <img src="https://placehold.co/600x400/1e293b/d1d5db?text=Hotel+Profile" alt="Hotel GMB Profile" class="w-full h-48 object-cover">
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h3 class="text-2xl font-semibold text-white mb-2">Hotel Tirumala GMB Profile</h3>
+                        <p class="text-slate-300 flex-grow">Managed and optimized the Google My Business profile to improve online visibility and customer engagement.</p>
+                        <a href="https://share.google/htrhpWbTCsEPCmuLZ" target="_blank" class="mt-4 inline-block text-teal-400 font-medium hover:underline transition-colors">
+                            View Profile →
+                        </a>
+                    </div>
+                </div>
+                <!-- Project Card 3: Personal Blog -->
+                <div class="bg-slate-700 rounded-2xl shadow-lg overflow-hidden flex flex-col transform transition-all duration-300 hover:scale-105 hover:shadow-2xl">
+                    <img src="https://placehold.co/600x400/1e293b/d1d5db?text=Personal+Blog" alt="Personal Blog" class="w-full h-48 object-cover">
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h3 class="text-2xl font-semibold text-white mb-2">My Personal Blog</h3>
+                        <p class="text-slate-300 flex-grow">A blog where I share my thoughts, experiences, and learnings on various topics.</p>
+                        <a href="https://tippannabangi.blogspot.com/" target="_blank" class="mt-4 inline-block text-teal-400 font-medium hover:underline transition-colors">
+                            Read Blog →
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Work Experience & Education Section -->
+        <section id="experience" class="container mx-auto px-6 md:px-12 fade-in-section">
+            <h2 class="text-4xl md:text-5xl font-bold text-center section-title mx-auto pb-4">Work & Education</h2>
+            <div class="mt-12 space-y-12 max-w-4xl mx-auto">
+                <!-- Experience Item -->
+                <div class="relative pl-8 sm:pl-32 group">
+                    <div class="absolute left-0 sm:left-16 top-0 bottom-0 w-1 bg-teal-500 rounded-full hidden sm:block"></div>
+                    <div class="relative z-10 flex flex-col sm:flex-row items-start sm:items-center">
+                        <div class="bg-teal-500 text-slate-900 rounded-full w-24 sm:w-32 py-2 text-center text-sm font-semibold flex-shrink-0 mb-4 sm:mb-0 transition-transform duration-300 group-hover:scale-110">
+                            ~3 Years
+                        </div>
+                        <div class="sm:ml-8 bg-slate-800 p-6 rounded-2xl shadow-lg w-full transition-all duration-300 transform group-hover:-translate-y-1 group-hover:shadow-2xl">
+                            <h3 class="text-2xl font-bold text-white">Customer Associate</h3>
+                            <p class="text-slate-400">SquadStack | Remote</p>
+                            <ul class="mt-2 text-slate-300 list-disc list-inside space-y-1">
+                                <li>Interacted with leads and customers to deliver product insights and support.</li>
+                                <li>Maintained high communication standards to ensure customer satisfaction.</li>
+                                <li>Focused on data accuracy and performance metrics to meet team goals.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- Trainee Item -->
+                <div class="relative pl-8 sm:pl-32 group">
+                    <div class="absolute left-0 sm:left-16 top-0 bottom-0 w-1 bg-teal-500 rounded-full hidden sm:block"></div>
+                    <div class="relative z-10 flex flex-col sm:flex-row items-start sm:items-center">
+                        <div class="bg-teal-500 text-slate-900 rounded-full w-24 sm:w-32 py-2 text-center text-sm font-semibold flex-shrink-0 mb-4 sm:mb-0 transition-transform duration-300 group-hover:scale-110">
+                            Trainee
+                        </div>
+                        <div class="sm:ml-8 bg-slate-800 p-6 rounded-2xl shadow-lg w-full transition-all duration-300 transform group-hover:-translate-y-1 group-hover:shadow-2xl">
+                            <h3 class="text-2xl font-bold text-white">Trainee, Deshpande Skilling</h3>
+                            <p class="text-slate-400">Hubli, Karnataka</p>
+                            <ul class="mt-2 text-slate-300 list-disc list-inside space-y-1">
+                                <li>Developing skills in business communication, reasoning, aptitude, and technology.</li>
+                                <li>Participating in real-world projects and industry-oriented training.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- Education Item -->
+                <div class="relative pl-8 sm:pl-32 group">
+                    <div class="absolute left-0 sm:left-16 top-0 bottom-0 w-1 bg-teal-500 rounded-full hidden sm:block"></div>
+                    <div class="relative z-10 flex flex-col sm:flex-row items-start sm:items-center">
+                        <div class="bg-teal-500 text-slate-900 rounded-full w-24 sm:w-32 py-2 text-center text-sm font-semibold flex-shrink-0 mb-4 sm:mb-0 transition-transform duration-300 group-hover:scale-110">
+                            Education
+                        </div>
+                        <div class="sm:ml-8 bg-slate-800 p-6 rounded-2xl shadow-lg w-full transition-all duration-300 transform group-hover:-translate-y-1 group-hover:shadow-2xl">
+                            <h3 class="text-2xl font-bold text-white">Bachelor of Arts (B.A.) in Economics</h3>
+                            <p class="text-slate-400">Rani Channamma University, Belagavi | Completed</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Certifications Section -->
+        <section id="certifications" class="container mx-auto px-6 md:px-12 py-16 fade-in-section">
+            <h2 class="text-4xl md:text-5xl font-bold text-center section-title mx-auto pb-4">Certifications</h2>
+            <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <!-- Certification Card 1: Introduction to Digital Marketing -->
+                <a href="https://www.coursera.org/account/accomplishments/verify/Z6NKQVJTXXAX" target="_blank" class="block p-8 bg-slate-800 rounded-2xl shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl">
+                    <div class="flex flex-col h-full">
+                        <img src="https://i.ibb.co/v4zCnZCL/IMG-20250816-144049.jpg" alt="Introduction to Digital Marketing Certificate" class="w-full h-40 object-contain mb-4 rounded">
+                        <h3 class="text-xl font-semibold text-white">Introduction to Digital Marketing</h3>
+                        <p class="text-slate-400 mt-2">Issued by: <span class="font-medium text-teal-400">Meta</span></p>
+                        <p class="text-slate-300 mt-4 flex-grow">Covers the fundamentals of digital marketing, social media marketing, and online advertising strategies.</p>
+                        <p class="mt-4 text-teal-400 font-medium">View Certificate →</p>
+                    </div>
+                </a>
+
+                <!-- Certification Card 2: Data, Data, Everywhere -->
+                <a href="https://www.coursera.org/account/accomplishments/verify/J5E4E4E4X8XG" target="_blank" class="block p-8 bg-slate-800 rounded-2xl shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl">
+                    <div class="flex flex-col h-full">
+                        <img src="https://i.ibb.co/N6fxJtpC/IMG-20250816-143847.jpg" alt="Data, Data, Everywhere Certificate" class="w-full h-40 object-contain mb-4 rounded">
+                        <h3 class="text-xl font-semibold text-white">Data, Data, Everywhere</h3>
+                        <p class="text-slate-400 mt-2">Issued by: <span class="font-medium text-teal-400">Google</span></p>
+                        <p class="text-slate-300 mt-4 flex-grow">Focuses on the importance of data, the data analysis process, and the foundational concepts of data analytics.</p>
+                        <p class="mt-4 text-teal-400 font-medium">View Certificate →</p>
+                    </div>
+                </a>
+
+                <!-- Certification Card 3: Data Entry Operator -->
+                <a href="https://www.edubridgeindia.com/certificate-detail?enrollment_number=EBEON0225986007" target="_blank" class="block p-8 bg-slate-800 rounded-2xl shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl">
+                    <div class="flex flex-col h-full">
+                        <img src="https://i.ibb.co/TzYMrTH/IMG-20250816-143652.jpg" alt="Data Entry Operator Certificate" class="w-full h-40 object-contain mb-4 rounded">
+                        <h3 class="text-xl font-semibold text-white">Data Entry Operator</h3>
+                        <p class="text-slate-400 mt-2">Issued by: <span class="font-medium text-teal-400">EduBridge</span></p>
+                        <p class="text-slate-300 mt-4 flex-grow">Proficiency in data entry techniques, accuracy, speed, and use of relevant software tools.</p>
+                        <p class="mt-4 text-teal-400 font-medium">View Certificate →</p>
+                    </div>
+                </a>
+
+                <!-- Certification Card 4: Agile Project Management -->
+                <a href="https://certificates.hpe.com/certificate/01e4a68612/verify" target="_blank" class="block p-8 bg-slate-800 rounded-2xl shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl">
+                    <div class="flex flex-col h-full">
+                        <img src="https://i.ibb.co/qLWhmp0Y/IMG-20250816-143450.jpg" alt="Agile Project Management Certificate" class="w-full h-40 object-contain mb-4 rounded">
+                        <h3 class="text-xl font-semibold text-white">Agile Project Management</h3>
+                        <p class="text-slate-400 mt-2">Issued by: <span class="font-medium text-teal-400">HP LIFE</span></p>
+                        <p class="text-slate-300 mt-4 flex-grow">Introduces the principles of Agile methodology for project management, focusing on flexibility and collaboration.</p>
+                        <p class="mt-4 text-teal-400 font-medium">View Certificate →</p>
+                    </div>
+                </a>
+
+                <!-- Certification Card 5: AI for Business Professionals -->
+                <a href="https://certificates.hpe.com/certificate/01a4e1564/verify" target="_blank" class="block p-8 bg-slate-800 rounded-2xl shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl">
+                    <div class="flex flex-col h-full">
+                        <img src="https://i.ibb.co/JRtL8zyj/certificate.jpg" alt="AI for Business Professionals Certificate" class="w-full h-40 object-contain mb-4 rounded">
+                        <h3 class="text-xl font-semibold text-white">AI for Business Professionals</h3>
+                        <p class="text-slate-400 mt-2">Issued by: <span class="font-medium text-teal-400">HP LIFE</span></p>
+                        <p class="text-slate-300 mt-4 flex-grow">Provides an overview of how AI can be leveraged for business applications and strategic decision-making.</p>
+                        <p class="mt-4 text-teal-400 font-medium">View Certificate →</p>
+                    </div>
+                </a>
+
+                <!-- NEW Certification Card: Sales Foundation -->
+                <a href="https://www.linkedin.com/learning/certificates/eee1baedacdeef6226e387053f0c1e07a13a01bdbbfb5472d20704ca68d0c3b3" target="_blank" class="block p-8 bg-slate-800 rounded-2xl shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl">
+                    <div class="flex flex-col h-full">
+                        <!-- Using the image link provided by the user -->
+                        <img src="https://i.ibb.co/HDNtQzNx/Sales-Foundatiol.jpg" alt="Sales Foundation Certificate" class="w-full h-40 object-contain mb-4 rounded">
+                        <h3 class="text-xl font-semibold text-white">Sales Foundation</h3>
+                        <p class="text-slate-400 mt-2">Issued by: <span class="font-medium text-teal-400">LinkedIn Learning</span></p>
+                        <p class="text-slate-300 mt-4 flex-grow">Fundamental concepts of sales, including communication, building rapport, and closing deals.</p>
+                        <!-- TODO: Replace the '#' with the actual verification URL for this certificate -->
+                        <p class="mt-4 text-teal-400 font-medium">View Certificate →</p>
+                    </div>
+                </a>
+
+                <!-- NEW Certification Card: Six Sigma White Belt -->
+                <a href="#" target="_blank" class="block p-8 bg-slate-800 rounded-2xl shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl">
+                    <div class="flex flex-col h-full">
+                        <!-- Using the image link provided by the user -->
+                        <img src="https://i.ibb.co/wFQrxWp7/six-sigma-white-belt.jpg" alt="Six Sigma White Belt Certificate" class="w-full h-40 object-contain mb-4 rounded">
+                        <h3 class="text-xl font-semibold text-white">Six Sigma White Belt (Sales)</h3>
+                        <p class="text-slate-400 mt-2">Issued by: <span class="font-medium text-teal-400">Educate 360</span></p>
+                        <p class="text-slate-300 mt-4 flex-grow">Introduces the basics of Six Sigma principles and methodology to improve process efficiency and quality.</p>
+                        <!-- TODO: Replace the '#' with the actual verification URL for this certificate -->
+                        <p class="mt-4 text-teal-400 font-medium">View Certificate →</p>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- Short Films Section -->
+        <section id="short-films" class="container mx-auto px-6 md:px-12 py-16 bg-slate-800 rounded-3xl shadow-xl fade-in-section">
+            <h2 class="text-4xl md:text-5xl font-bold text-center section-title mx-auto pb-4">Short Films</h2>
+            <div class="mt-12 text-center text-lg max-w-4xl mx-auto text-slate-300">
+                <p>
+                    Here are some short films I directed during my 12th grade. They were a fun way to explore my creativity and storytelling skills.
+                </p>
+            </div>
+            <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 justify-items-center">
+                <!-- Video 1: Salaga Picture -->
+                <div class="w-full rounded-2xl shadow-lg overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-2xl">
+                    <div class="relative w-full" style="padding-top: 56.25%;">
+                        <iframe class="absolute inset-0 w-full h-full" src="https://www.youtube.com/embed/dBjzLU6OEW0" title="✍️ಸಲಗ ಪಿಚ್ಚರ್ ನೋಡಿ ಏನ್ ಲೆ ✍️ vajjaramatti little heroes cute short film" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <!-- Video 2: Carona Time Vaccination -->
+                <div class="w-full rounded-2xl shadow-lg overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-2xl">
+                    <div class="relative w-full" style="padding-top: 56.25%;">
+                        <iframe class="absolute inset-0 w-full h-full" src="https://www.youtube.com/embed/hS2qKNoM4rs" title="Carona Time Vaccination" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <!-- Video 3: Kalla Manekelasaagara -->
+                <div class="w-full rounded-2xl shadow-lg overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-2xl">
+                    <div class="relative w-full" style="padding-top: 56.25%;">
+                        <iframe class="absolute inset-0 w-full h-full" src="https://www.youtube.com/embed/TDSbww2T75o" title="🏃🕵‍♂️ಕಳ್ಳ ಮನೆಕೆಲಸಗಾರ 🕵‍♀️🏃‍♂️ /Vajjaramatti little heroes cute short film" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <!-- Video 4: Vajjaramatti little heroes cute short film -->
+                <div class="w-full rounded-2xl shadow-lg overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-2xl">
+                    <div class="relative w-full" style="padding-top: 56.25%;">
+                        <iframe class="absolute inset-0 w-full h-full" src="https://www.youtube.com/embed/DoUVGur412Q" title="Vajjaramatti little heroes cute short film" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="container mx-auto px-6 md:px-12 py-16 bg-slate-800 rounded-3xl shadow-xl fade-in-section">
+            <h2 class="text-4xl md:text-5xl font-bold text-center section-title mx-auto pb-4">Get In Touch</h2>
+            <div class="mt-12 max-w-3xl mx-auto grid md:grid-cols-2 gap-8 md:gap-12">
+                <div>
+                    <h3 class="text-2xl font-semibold text-white">Contact Details</h3>
+                    <ul class="mt-6 space-y-4 text-lg">
+                        <li class="flex items-start space-x-4">
+                            <svg class="w-8 h-8 text-teal-400 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 4H4c-1.103 0-2 .897-2 2v12c0 1.103.897 2 2 2h16c1.103 0 2-.897 2-2V6c0-1.103-.897-2-2-2zm0 2v.511l-8 6.009-8-6.009V6h16zM4 18V9.754l7.633 5.725c.19.143.431.218.672.218s.482-.075.672-.218L20 9.754V18H4z"/></svg>
+                            <span>Tippannahbangi@gmail.com</span>
+                        </li>
+                        <li class="flex items-start space-x-4">
+                            <svg class="w-8 h-8 text-teal-400 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24c1.12.37 2.33.57 3.57.57c.55 0 1 .45 1 1V20c0 .55-.45 1-1 1c-9.39 0-17-7.61-17-17c0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1c0 1.25.2 2.45.57 3.57c.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+                            <span>+91 7795610812</span>
+                        </li>
+                    </ul>
+                    <!-- LinkedIn Badge -->
+                    <div class="mt-8 flex justify-start">
+                        <div class="badge-base LI-profile-badge" data-locale="en_US" data-size="medium" data-theme="dark" data-type="VERTICAL" data-vanity="tippanna-bangi-2b1a77328" data-version="v1"><a class="badge-base__link LI-simple-link" href="https://in.linkedin.com/in/tippanna-bangi-2b1a77328?trk=profile-badge">Tippanna Bangi</a></div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-semibold text-white mb-6">Send a Message</h3>
+                    <!-- Tally form embed code - iframe height updated for better spacing -->
+                    <iframe data-tally-src="https://tally.so/embed/w26oMb?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1" loading="lazy" width="100%" height="300" frameborder="0" marginheight="0" marginwidth="0" title="GET IN TOUCH"></iframe>
+                    <script>var d=document,w="https://tally.so/widgets/embed.js",v=function(){"undefined"!=typeof Tally?Tally.loadEmbeds():d.querySelectorAll("iframe[data-tally-src]:not([src])").forEach((function(e){e.src=e.dataset.tallySrc}))};if("undefined"!=typeof Tally)v();else if(d.querySelector('script[src="'+w+'"]')==null){var s=d.createElement("script");s.src=w,s.onload=v,s.onerror=v,d.body.appendChild(s);}</script>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 p-8 text-center border-t border-slate-800">
+        <p>© 2025 Tippanna Bangi. All rights reserved.</p>
+        <p class="mt-2">Developed with ❤️ & Tippanna </p>
+    </footer>
+
+    <!-- Floating CV Button -->
+    <a href="https://drive.google.com/file/d/1QxJe8d9uYTP08JqPNdJlXWikMv-9PmsQ/view?usp=drive_link" target="_blank" class="fixed bottom-8 right-8 bg-teal-500 text-slate-900 w-16 h-16 rounded-full shadow-lg flex items-center justify-center font-bold text-xl hover:bg-teal-400 transform hover:scale-110 transition-all duration-300 z-50">
+        CV
+    </a>
+
+    <!-- LinkedIn Badge Script -->
+    <script src="https://platform.linkedin.com/badges/js/profile.js" async defer type="text/javascript"></script>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href.length > 1) {
+                    e.preventDefault();
+                    const targetElement = document.querySelector(href);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            });
+        });
+
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu when a link is clicked
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Add a class to the header on scroll
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('main-header');
+            if (window.scrollY > 50) {
+                header.classList.add('bg-opacity-100');
+                header.classList.remove('bg-opacity-80');
+            } else {
+                header.classList.add('bg-opacity-80');
+                header.classList.remove('bg-opacity-100');
+            }
+        });
+
+        // Fade-in sections on scroll using Intersection Observer
+        const fadeInSections = document.querySelectorAll('.fade-in-section');
+        const options = {
+            threshold: 0.2
+        };
+
+        const observer = new IntersectionObserver(function(entries, observer) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, options);
+
+        fadeInSections.forEach(section => {
+            observer.observe(section);
+        });
+
+        // Three.js 3D Background Animation
+        let scene, camera, renderer, particles;
+        let mouseX = 0, mouseY = 0;
+        let windowHalfX = window.innerWidth / 2;
+        let windowHalfY = window.innerHeight / 2;
+
+        function init() {
+            const canvas = document.getElementById('bg-canvas');
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+
+            // Create a field of particles
+            const geometry = new THREE.BufferGeometry();
+            const vertices = [];
+            const particleCount = 2500;
+            const starColor = new THREE.Color(0x0D9488); // Teal color
+
+            for (let i = 0; i < particleCount; i++) {
+                const x = (Math.random() - 0.5) * 2000;
+                const y = (Math.random() - 0.5) * 2000;
+                const z = (Math.random() - 0.5) * 2000;
+                vertices.push(x, y, z);
+            }
+            geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+
+            const material = new THREE.PointsMaterial({
+                color: starColor,
+                size: 2.5,
+                transparent: true,
+                opacity: 0.7
+            });
+
+            particles = new THREE.Points(geometry, material);
+            scene.add(particles);
+
+            camera.position.z = 5;
+
+            document.addEventListener('mousemove', onDocumentMouseMove, false);
+            window.addEventListener('resize', onWindowResize, false);
+        }
+
+        function onWindowResize() {
+            windowHalfX = window.innerWidth / 2;
+            windowHalfY = window.innerHeight / 2;
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        function onDocumentMouseMove(event) {
+            mouseX = (event.clientX - windowHalfX);
+            mouseY = (event.clientY - windowHalfY);
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+
+            // Animate particles
+            const positions = particles.geometry.attributes.position.array;
+            for (let i = 0; i < positions.length; i += 3) {
+                positions[i + 2] += 1; // Move particles towards the camera
+                if (positions[i + 2] > camera.position.z) {
+                    // Reset particle to far away when it passes the camera
+                    positions[i] = (Math.random() - 0.5) * 2000;
+                    positions[i + 1] = (Math.random() - 0.5) * 2000;
+                    positions[i + 2] = -2000;
+                }
+            }
+            particles.geometry.attributes.position.needsUpdate = true;
+
+            // Subtle camera movement based on mouse position
+            camera.position.x += (mouseX / 2000 - camera.position.x) * 0.05;
+            camera.position.y += (-mouseY / 2000 - camera.position.y) * 0.05;
+            camera.lookAt(scene.position);
+
+            renderer.render(scene, camera);
+        }
+
+        window.onload = function() {
+            init();
+            animate();
+        };
+    </script>
+</body>
+</html>
